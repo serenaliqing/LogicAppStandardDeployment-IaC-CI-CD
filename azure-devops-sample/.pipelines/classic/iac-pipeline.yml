@@ -19,7 +19,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy ARM templates'
       inputs:
-        sourceFolder: 'deploy'
+        sourceFolder: 'azure-devops-sample/deploy'
         targetFolder: '$(Build.ArtifactStagingDirectory)'
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: $(artifactName)
@@ -33,4 +33,4 @@ stages:
     parameters:
       environment: $(devEnvironment)
       # TODO: Fill in with the name of your Azure service connection
-      serviceConnection: ''
+      serviceConnection: 'LAStandard'
