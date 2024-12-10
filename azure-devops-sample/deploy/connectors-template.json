@@ -45,6 +45,7 @@
                   "defaultAction": "Allow"
               },
               "allowBlobPublicAccess": true,
+              "publicNetworkAccess": "Enabled",
               "supportsHttpsTrafficOnly": true,
               "encryption": {
                   "services": {
