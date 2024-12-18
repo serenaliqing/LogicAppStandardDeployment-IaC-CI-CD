@@ -8,6 +8,7 @@ variables:
   value: dev
 
 
+#Download Resource
 resources:
   pipelines:
   - pipeline: cipipeline
@@ -26,7 +27,7 @@ stages:
   - deployment: deploy_logicapp_resources
     displayName: Deploy Logic App
     pool:
-      vmImage: ubuntu-latest
+      vmImage: 'ubuntu-latest'
     environment: $(devEnvironment)
     variables:
       deploymentMode: 'Incremental'
@@ -35,14 +36,6 @@ stages:
         deploy:
           steps:
           
-          #  - task: DownloadPipelineArtifact@2
-          #    inputs:
-          #      artifact: 'logicAppCIArtifact'
-          #      path: '$(Build.ArtifactStagingDirectory)'
-          #  - script: dir
-          #    workingDirectory: $(Build.ArtifactStagingDirectory)
-          #    displayName: List contents of a folder
-
            - task: AzureCLI@2
              displayName: 'Deploy Logic App Workflows'
              inputs:
