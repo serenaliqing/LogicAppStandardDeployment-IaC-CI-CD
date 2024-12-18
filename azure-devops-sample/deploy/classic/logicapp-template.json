@@ -140,6 +140,10 @@
               "value": "[parameters('location')]"
             },
             {
+              "name": "storage_account_name", 
+              "value": "sacatserena1209"
+            },
+            {
               "name": "WORKFLOWS_RESOURCE_GROUP_NAME", 
               "value": ""
             },
