@@ -3,17 +3,19 @@ trigger: none
 pr: none
 
 variables:
+- template: variables/pipeline-vars.yml
 - name: devEnvironment
   value: dev
 
-resources:
-  pipelines:
-  - pipeline: cipipeline
-    # TODO: Update with the name of your CI pipeline
-    source: ''
-    trigger:
-      branches:
-      - main
+
+# resources:
+#   pipelines:
+#   - pipeline: CI
+#     # TODO: Update with the name of your CI pipeline
+#     source: ''
+#     trigger:
+#       branches:
+#       - main
 
 stages:
 - stage: DEV
@@ -24,7 +26,7 @@ stages:
   - deployment: deploy_logicapp_resources
     displayName: Deploy Logic App
     pool:
-      vmImage: ubuntu-18.04
+      vmImage: ubuntu-latest
     environment: $(devEnvironment)
     variables:
       deploymentMode: 'Incremental'
@@ -32,12 +34,23 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: AzureFunctionApp@1
-            displayName: 'Deploy logic app workflows'
-            inputs:
-              # TODO: Fill in with the name of your Azure service connection
-              azureSubscription: ''
-              appType: 'functionApp'
-              appName: '$(logicAppName)'
-              package: '$(Pipeline.Workspace)/cipipeline/$(logicAppCIArtifactName)/$(resources.pipeline.cipipeline.runID).zip'
-              deploymentMethod: 'zipDeploy'
+          
+           - task: DownloadPipelineArtifact@2
+             inputs:
+               artifact: 'logicAppCIArtifact'
+               path: '$(Build.ArtifactStagingDirectory)'
+           - script: dir
+             workingDirectory: $(Build.ArtifactStagingDirectory)
+             displayName: List contents of a folder
+
+           - task: AzureCLI@2
+             displayName: 'Deploy Logic App Workflows'
+             inputs:
+               azureSubscription: 'LAStandard' 
+               scriptType: 'bash'
+               scriptLocation: 'inlineScript'
+               inlineScript: |
+                 az logicapp deployment source config-zip \
+                    --resource-group $(resourceGroupName) \
+                    --name $(logicAppName) \
+                    --src '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
