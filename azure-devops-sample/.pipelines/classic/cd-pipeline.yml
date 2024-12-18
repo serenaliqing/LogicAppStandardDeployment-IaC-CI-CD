@@ -35,13 +35,13 @@ stages:
         deploy:
           steps:
           
-           - task: DownloadPipelineArtifact@2
-             inputs:
-               artifact: 'logicAppCIArtifact'
-               path: '$(Build.ArtifactStagingDirectory)'
-           - script: dir
-             workingDirectory: $(Build.ArtifactStagingDirectory)
-             displayName: List contents of a folder
+          #  - task: DownloadPipelineArtifact@2
+          #    inputs:
+          #      artifact: 'logicAppCIArtifact'
+          #      path: '$(Build.ArtifactStagingDirectory)'
+          #  - script: dir
+          #    workingDirectory: $(Build.ArtifactStagingDirectory)
+          #    displayName: List contents of a folder
 
            - task: AzureCLI@2
              displayName: 'Deploy Logic App Workflows'
