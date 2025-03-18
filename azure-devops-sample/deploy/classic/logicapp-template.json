@@ -117,7 +117,7 @@
             },
             {
               "name": "FUNCTIONS_WORKER_RUNTIME",
-              "value": "node"
+              "value": "dotnet"
             },
             {
               "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
@@ -127,10 +127,6 @@
               "name": "WEBSITE_CONTENTSHARE",
               "value": "[parameters('logicAppName')]"
             },
-            {
-              "name": "WEBSITE_NODE_DEFAULT_VERSION",
-              "value": "~12"
-            }, 
             {
               "name": "WORKFLOWS_SUBSCRIPTION_ID", 
               "value": "[subscription().subscriptionId]"
